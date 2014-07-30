@@ -17,7 +17,6 @@ import scala.concurrent.Future
  */
 object SinaFinace extends App{
 
-
   StockMaster.gainStockSnap(Seq("600050","000996","600163","600726"))
 
   println("----------------------------------------");
