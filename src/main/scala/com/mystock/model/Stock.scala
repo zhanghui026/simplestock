@@ -46,20 +46,31 @@ case class Stock(sid:String,
 case class NowStock(stock:Stock,nowValue:String){
   lazy val values = nowValue.split(',')
 
-  lazy val todayStartPrice = nowValue(1).toDouble
+  lazy val todayStartPrice = values(1).toDouble
 
-  lazy val yestodayEndPrice = nowValue(2).toDouble
+  lazy val yestodayEndPrice = values(2).toDouble
 
-  lazy val nowPrice = nowValue(3).toDouble
+  lazy val nowPrice = {
+    try {
 
-  lazy val todayHighPrice = nowValue(4).toDouble
+      values(3).toDouble
+    }catch {
+      case e:Exception => println(stock + " " +nowValue)
+        0.0
+    }
+  }
 
-  lazy val todayLowPrice = nowValue(5).toDouble
+  lazy val todayHighPrice = values(4).toDouble
+
+  lazy val todayLowPrice = values(5).toDouble
 
 
-  lazy val todayDate = nowValue(30)
+  lazy val todayDate = values(30)
 
-  lazy val todayTime = nowValue(29)
+  lazy val todayTime = values(29)
+}
+object NowStock {
+  def apply(stockCode:String,_stockValue:String):NowStock = this(Stock(stockCode,_stockValue.split(',')(0),""),_stockValue)
 }
 
 case class BuyStock(stock:Stock,buyPrice:Double,buyNumber:Int) extends Price
